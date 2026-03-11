@@ -1,0 +1,175 @@
+.board-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: relative;
+}
+
+.rank-labels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: var(--board-size);
+    padding-right: 6px;
+}
+
+.rank-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-family: var(--font-jetbrains), var(--font-mono);
+    width: 18px;
+    text-align: center;
+    height: var(--square-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-labels {
+    display: flex;
+    justify-content: space-around;
+    width: var(--board-size);
+    padding-top: 6px;
+    margin-left: 24px;
+}
+
+.file-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-family: var(--font-jetbrains), var(--font-mono);
+    width: var(--square-size);
+    text-align: center;
+}
+
+.chessboard {
+    width: var(--board-size);
+    height: var(--board-size);
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.06),
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        0 0 60px rgba(0, 0, 0, 0.25);
+    position: relative;
+}
+
+.chessboard.shake {
+    animation: board-shake 0.3s ease-in-out;
+}
+
+/* ==========================================
+   SQUARES
+   ========================================== */
+
+.square {
+    width: var(--square-size);
+    height: var(--square-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: default;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: background-color 0.15s ease;
+}
+
+.square.light { background-color: #eedfcc; }
+.square.dark { background-color: #8fad7b; }
+
+.square.selected.light { background-color: #f2e088 !important; }
+.square.selected.dark { background-color: #cdd447 !important; }
+
+.square.last-move.light { background-color: #f5f0a0; }
+.square.last-move.dark { background-color: #b9ca43; }
+
+.square.in-check {
+    background: radial-gradient(circle, #ef4444 0%, rgba(239, 68, 68, 0.5) 40%, transparent 70%) !important;
+    animation: check-pulse 1.5s ease-in-out infinite;
+}
+
+.square.legal-target { cursor: pointer; }
+.square.legal-target:hover.light { background-color: rgba(124, 58, 237, 0.25) !important; }
+.square.legal-target:hover.dark { background-color: rgba(124, 58, 237, 0.35) !important; }
+
+/* ==========================================
+   PIECES
+   ========================================== */
+
+.piece {
+    font-size: calc(var(--square-size) * 0.78);
+    line-height: 1;
+    z-index: 2;
+    cursor: grab;
+    filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.35));
+    pointer-events: all;
+    transition: transform 0.1s ease;
+}
+
+.piece:hover {
+    transform: scale(1.05);
+}
+
+.piece:active { cursor: grabbing; }
+
+.piece.white-piece {
+    color: #ffffff;
+    text-shadow: 
+        0 0 2px rgba(0, 0, 0, 0.6),
+        1px 1px 2px rgba(0, 0, 0, 0.4);
+    -webkit-text-stroke: 0.8px rgba(0, 0, 0, 0.35);
+    filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.45));
+}
+
+.piece.black-piece {
+    color: #1a1a2e;
+    text-shadow:
+        0 0 2px rgba(0, 0, 0, 0.3),
+        1px 1px 2px rgba(0, 0, 0, 0.2);
+    -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.4);
+    filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.3));
+}
+
+/* ==========================================
+   LEGAL MOVE INDICATORS
+   ========================================== */
+
+.legal-dot {
+    width: 30%;
+    height: 30%;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.18);
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.legal-capture-ring {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: calc(var(--square-size) * 0.1) solid rgba(0, 0, 0, 0.22);
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   DRAG GHOST
+   ========================================== */
+
+.piece-ghost {
+    position: fixed;
+    font-size: calc(var(--square-size) * 0.9);
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.92;
+    filter: drop-shadow(3px 5px 8px rgba(0, 0, 0, 0.5));
+    transition: none;
+}

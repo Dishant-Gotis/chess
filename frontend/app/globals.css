@@ -1,0 +1,157 @@
+/* ==========================================
+   DESIGN SYSTEM — CSS Custom Properties
+   ========================================== */
+
+:root {
+    /* --- Color Palette (Dark Theme) --- */
+    --bg-primary: #0f0f13;
+    --bg-secondary: #1a1a24;
+    --bg-elevated: #222233;
+    --bg-card: rgba(30, 30, 48, 0.7);
+    --bg-card-hover: rgba(40, 40, 60, 0.8);
+
+    --text-primary: #e8e6f0;
+    --text-secondary: #9896a8;
+    --text-muted: #5c5a6e;
+    --text-accent: #a78bfa;
+
+    --accent-primary: #7c3aed;
+    --accent-primary-hover: #6d28d9;
+    --accent-glow: rgba(124, 58, 237, 0.3);
+    --accent-secondary: #06b6d4;
+
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --danger-glow: rgba(239, 68, 68, 0.3);
+
+    /* --- Board Colors --- */
+    --square-light: #e8dcc8;
+    --square-dark: #7b9b6b;
+    --square-light-highlight: #f5f0a0;
+    --square-dark-highlight: #b9ca43;
+    --square-selected: rgba(124, 58, 237, 0.45);
+    --square-legal-dot: rgba(0, 0, 0, 0.2);
+    --square-legal-capture: rgba(0, 0, 0, 0.3);
+    --square-check: rgba(239, 68, 68, 0.6);
+
+    /* --- Spacing --- */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+
+    /* --- Border Radius --- */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+
+    /* --- Shadows --- */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 20px var(--accent-glow);
+
+    /* --- Typography --- */
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* --- Transitions --- */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 400ms ease;
+
+    /* --- Board size --- */
+    --board-size: min(80vh, 560px);
+    --square-size: calc(var(--board-size) / 8);
+
+    /* --- Glass morphism --- */
+    --glass-bg: rgba(30, 30, 48, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-blur: 12px;
+}
+
+/* ==========================================
+   RESET & BASE
+   ========================================== */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(124, 58, 237, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(6, 182, 212, 0.04) 0%, transparent 50%);
+}
+
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
+
+@keyframes piece-appear {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes check-pulse {
+    0%, 100% { box-shadow: inset 0 0 0 0 transparent; }
+    50% { box-shadow: inset 0 0 20px var(--danger-glow); }
+}
+
+@keyframes board-shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 50%, 90% { transform: translateX(-3px); }
+    30%, 70% { transform: translateX(3px); }
+}
+
+@keyframes status-flash {
+    0% { background-color: var(--glass-bg); }
+    50% { background-color: var(--accent-glow); }
+    100% { background-color: var(--glass-bg); }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-timer {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px) scale(0.96); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@media (max-width: 900px) {
+    :root {
+        --board-size: min(90vw, 480px);
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --board-size: min(95vw, 400px);
+    }
+}
